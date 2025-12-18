@@ -63,34 +63,8 @@ Court_Fetcher.postman_collection.json
 Postman/Thunder Client collection for API testing
 
 🚀 Quick Start (5 Minutes)
-Step 1: Create Project Structure
-bash
-mkdir court-fetcher
-cd court-fetcher
-Step 2: Save All Files
-Create the following directory structure and copy the code:
 
-court-fetcher/
-├── backend/
-│   ├── server.js                 # Copy from artifact "backend_server"
-│   ├── routes/
-│   │   └── api.js                # Copy from artifact "api_routes"
-│   ├── services/
-│   │   └── fetchers/
-│   │       └── delhiHC.js        # Copy from artifact "delhi_hc_fetcher"
-│   ├── db/
-│   │   └── schema.sql            # Copy from artifact "db_schema"
-│   └── uploads/
-│       └── .gitkeep
-│
-├── package.json                  # Copy from artifact "package_json"
-├── .env                          # Copy from artifact "env_example" and rename
-├── .gitignore
-├── setup.sh                      # Copy from artifact "setup_script"
-├── test_api.sh                   # Copy from artifact "test_api"
-├── README.md                     # Copy from artifact "readme_file"
-└── Court_Fetcher.postman_collection.json  # Copy from artifact "postman_collection"
-Step 3: Run Setup
+Step 1: Run Setup
 bash
 chmod +x setup.sh
 ./setup.sh
@@ -99,12 +73,12 @@ This will:
 Install all npm dependencies
 Create necessary directories
 Set up configuration files
-Step 4: Start Backend
+Step 2: Start Backend
 bash
 npm start
 Server will run on http://localhost:5000
 
-Step 5: Set Up Frontend
+Step 3: Set Up Frontend
 Option A: Use the React Artifact Directly
 
 The React component is already complete in the artifact
@@ -722,4 +696,5 @@ Project Completion Checklist:
  CAPTCHA handling (if needed)
  Production deployment
 The foundation is complete and ready for real-world implementation!
+
 

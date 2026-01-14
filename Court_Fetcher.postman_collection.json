@@ -1,0 +1,218 @@
+{
+  "info": {
+    "name": "Court Fetcher API",
+    "description": "API collection for Indian eCourts Case Fetcher",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "queryId",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        },
+        "description": "Check if the API server is running"
+      }
+    },
+    {
+      "name": "Search Case",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 200) {",
+              "    const response = pm.response.json();",
+              "    if (response.queryId) {",
+              "        pm.collectionVariables.set('queryId', response.queryId);",
+              "    }",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"court\": \"delhi_hc\",\n  \"caseType\": \"WP(C)\",\n  \"caseNumber\": \"12345\",\n  \"year\": \"2023\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/search",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "search"]
+        },
+        "description": "Search for a case by case type, number, and year"
+      }
+    },
+    {
+      "name": "Search Case - Criminal",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"court\": \"delhi_hc\",\n  \"caseType\": \"CRL.A\",\n  \"caseNumber\": \"98765\",\n  \"year\": \"2024\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/search",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "search"]
+        },
+        "description": "Search for a criminal case"
+      }
+    },
+    {
+      "name": "Get Query Details",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/query/{{queryId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "query", "{{queryId}}"]
+        },
+        "description": "Get details of a specific query by ID"
+      }
+    },
+    {
+      "name": "Get Query History",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/history?limit=50",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "history"],
+          "query": [
+            {
+              "key": "limit",
+              "value": "50"
+            }
+          ]
+        },
+        "description": "Get recent query history"
+      }
+    },
+    {
+      "name": "Download Document",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/download/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "download", "1"]
+        },
+        "description": "Download a document by ID"
+      }
+    },
+    {
+      "name": "Get Cause List",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"court\": \"delhi_hc\",\n  \"date\": \"2025-10-02\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/cause-list",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "cause-list"]
+        },
+        "description": "Fetch cause list for a specific date"
+      }
+    },
+    {
+      "name": "Download Cause List",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/download-cause-list/causelist_2025_10_02_1696248000.pdf",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "download-cause-list", "causelist_2025_10_02_1696248000.pdf"]
+        },
+        "description": "Download cause list PDF file"
+      }
+    },
+    {
+      "name": "Search - Invalid Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"court\": \"delhi_hc\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/search",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "search"]
+        },
+        "description": "Test error handling with missing parameters"
+      }
+    },
+    {
+      "name": "Search - Unsupported Court",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"court\": \"supreme_court\",\n  \"caseType\": \"CIVIL APPEAL\",\n  \"caseNumber\": \"12345\",\n  \"year\": \"2023\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/search",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "search"]
+        },
+        "description": "Test error handling for unsupported court"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+# dependencies
+node_modules/
+frontend/node_modules/
+
+# env files
+.env
+
+# database
+*.db
+
+# logs & temp
+*.log
+
+# OS
+.DS_Store
